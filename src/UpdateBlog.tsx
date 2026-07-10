@@ -6,13 +6,6 @@ interface FetchProp {
     fetch: () => void
 };
 
-interface DataBlog {
-  id: number,
-  created_at: string,
-  title: string,
-  description: string,
-};
-
 function Update({fetch}: FetchProp) {
     // 1. input validation
     // 2. verifying if the form was empty
