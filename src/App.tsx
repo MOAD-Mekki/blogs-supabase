@@ -1,6 +1,7 @@
 
 import Home from './Home'
 import Create from './CreateBlog'
+import Update from './UpdateBlog'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import { supabase } from './utils/supabase'
@@ -18,10 +19,7 @@ function App() {
 
   const [blogs,setBlogs] = useState<Blog[] | null>(null)
 
-   
-   
-  useEffect (() => {
-    const fetchData = async () => {
+  const fetchData = async () => {
 
        const {data, error} = await supabase.from('blogs').select();
 
@@ -32,7 +30,9 @@ function App() {
         }
 
     }
-
+ 
+   
+  useEffect (() => {
     fetchData();
   }, [])
 
@@ -40,8 +40,9 @@ function App() {
     <div>
       <BrowserRouter>
         <Routes>
-          <Route path='/' element={<Home blogs={blogs}/>}/>
-          <Route path='/create' element={<Create />}/>
+          <Route path='/' element={<Home blogs={blogs} fetch={fetchData}/>}/>
+          <Route path='/create' element={<Create fetch={fetchData}/>}/>
+          <Route path='/:id' element={<Update fetch={fetchData}/>} />
         </Routes>
       </BrowserRouter>
     </div>
